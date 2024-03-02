@@ -17,13 +17,21 @@ pipeline {
         }
 
         stage('Build Docker'){
+            steps{
+                script{
                     dockerImage = docker.build("mukesh123/cicd-e2e:${IMAGE_TAG}")
+                }
+            }
         }
 
         stage('Push the artifacts'){
+           steps{
+                script{
                     withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
                       dockerImage.push()
-                     }
+                    }
+                }
+            }
         }
         
         stage('Checkout K8S manifest SCM'){
