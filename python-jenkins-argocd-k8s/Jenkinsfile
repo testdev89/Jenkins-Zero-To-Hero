@@ -21,7 +21,7 @@ pipeline {
                 script{
                     sh '''
                     echo 'Buid Docker Image'
-                    docker build -t abhishekf5/cicd-e2e:${BUILD_NUMBER} .
+                    dockerImage = docker.build("mukesh123/cicd-e2e:${BUILD_NUMBER}")
                     '''
                 }
             }
@@ -32,7 +32,9 @@ pipeline {
                 script{
                     sh '''
                     echo 'Push to Repo'
-                    docker push abhishekf5/cicd-e2e:${BUILD_NUMBER}
+                    withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                      dockerImage.push()
+                     }
                     '''
                 }
             }
