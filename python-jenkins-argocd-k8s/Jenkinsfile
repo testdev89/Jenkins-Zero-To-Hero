@@ -19,7 +19,7 @@ pipeline {
         stage('Build Docker'){
             steps{
                 script{
-                    dockerImage = docker.build("mukesh123/cicd-e2e:${IMAGE_TAG}")
+                    dockerImage = docker.build("mukesh123/cicd-e2e:${IMAGE_TAG}", ./python-jenkins-argocd-k8s/)
                 }
             }
         }
